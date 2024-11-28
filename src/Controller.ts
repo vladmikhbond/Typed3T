@@ -49,6 +49,7 @@ export default class Controller {
                 this.trace!.addPoint(this.mousePos);
                 this.lastPos = this.mousePos;
             }
+            e.preventDefault();
         };
 
         this.canvas.onmouseup = this.canvas.ontouchend = () => {
@@ -62,6 +63,7 @@ export default class Controller {
                     this.view.dance(win, who);
                 }
             }
+            
         };
 
     }

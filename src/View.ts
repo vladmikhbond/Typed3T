@@ -13,8 +13,10 @@ export default class View
         this.ctx.lineWidth = model.size/50;
         this.ctx.lineCap = "round";
         this.ctx.lineJoin = "round";
-        this.clearCanvas();
         
+        
+        this.ctx.font = `italic ${model.size/20|0}px arial`;
+        this.ctx.fillText('Click here to listen sounds', 40, 40);
     }
     
     clearCanvas()
