@@ -67,11 +67,13 @@ export default class View
         }
     }
 
+    audioX = <HTMLAudioElement>document.getElementById('audioX')!;
+    audioO = <HTMLAudioElement>document.getElementById('audioO')!;
+
+
     dance(win: number[], who: string) 
     {
-        const audioX = <HTMLAudioElement>document.getElementById('audioX')!;
-        const audioO = <HTMLAudioElement>document.getElementById('audioO')!;
-        
+            
         // dance at 1 sec after win    
         setTimeout(() => {
             // geometry centers
@@ -82,13 +84,14 @@ export default class View
             let fi = 0, dfi = Math.PI / 10;
             let timer: number;
             //  play music
-            let audio = who == 'X' ? audioX : audioO;
-            audio.onended = function () {
+            let audio = who == 'X' ? this.audioX : this.audioO;
+            audio.onended = () => {
                 clearInterval(timer);
             };
-
+             
             audio.play().then(() => {
             }).catch((error:any) => {
+                console.error(error);
                 setTimeout(() => {
                     clearInterval(timer); 
                 }, 3000);

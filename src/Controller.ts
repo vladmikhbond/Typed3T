@@ -27,6 +27,12 @@ export default class Controller {
 
     addListeners() {
 
+        this.canvas.onclick = () => {            
+            this.view.audioX.muted = false;
+            this.view.audioO.muted = false;   
+        };      
+
+
         this.canvas.onmousedown = this.canvas.ontouchstart = (e: Event) => {
             this.lastPos = Controller.getMousePos(e)!;
             if (this.lastPos) {
