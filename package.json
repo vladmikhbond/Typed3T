@@ -1,0 +1,16 @@
+{
+  "name": "typed3t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "live-server",
+    "start": "concurrently npm:start:*"
+  },
+
+  "type": "module"
+}
