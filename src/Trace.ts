@@ -1,11 +1,5 @@
 import Point from './Point.js';
 
-function dist(p: Point, q: Point) {
-    let dx = p.x - q.x,
-        dy = p.y - q.y;
-    return Math.sqrt(dx * dx + dy * dy);
-}
-
 import Model from './Model.js'
 
 export default class Trace 
@@ -31,7 +25,7 @@ export default class Trace
     len() {
         let sum = 0;
         for (let i = 1; i < this.points.length; i++)
-            sum += dist(this.points[i - 1], this.points[i]);
+            sum += this.points[i - 1.].distTo(this.points[i]);
         return sum;
     }
 
@@ -49,7 +43,7 @@ export default class Trace
     }
 
     get isClosed() {
-        return dist(this.points[0], this.points[this.points.length - 1]) < this.model!.size / 10;
+        return this.points[0].distTo(this.points[this.points.length - 1])  <  this.model!.size / 10;
     }
 }
 

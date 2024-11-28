@@ -3,8 +3,8 @@ import Point from "./Point.js";
 
 export default class View 
 {
-    model: Model;
-    ctx:CanvasRenderingContext2D;
+    private model: Model;
+    private ctx: CanvasRenderingContext2D;
 
     constructor(model: Model, canvas: HTMLCanvasElement) {
         this.model = model;
@@ -73,7 +73,7 @@ export default class View
         const audioO = <HTMLAudioElement>document.getElementById('audioO')!;
         
         // dance at 1 sec after win    
-        setTimeout(() => {
+        setTimeout(async () => {
             // geometry centers
             let centers: Point[] = [];
             for (let i = 0; i < win.length; i++)
@@ -81,22 +81,17 @@ export default class View
 
             let fi = 0, dfi = Math.PI / 10;
             let timer: number;
+            
             //  play music
             let audio = who == 'X' ? audioX : audioO;
+
             audio.onended = function () {
                 clearInterval(timer);
-                // setTimeout(refresh, 1000);
             };
 
-            audio.play().then(() => {
-            }).catch((error:any) => {
-                setTimeout(() => {
-                    clearInterval(timer); 
-                    // setTimeout(refresh, 1000);
-                }, 3000);
-            });
+            await audio.play();
 
-            // dance
+            // wolts
             timer = setInterval(() => {
                 this.drawWin(win, fi, centers);
                 fi += dfi;
@@ -105,9 +100,4 @@ export default class View
 
     }    
 
-    // function refresh() {
-    //     model = new Model(model.size);
-    //     view.clearCanvas();
-    //     controller.addListeners();
-    // }
 }
