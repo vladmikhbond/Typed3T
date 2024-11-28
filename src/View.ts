@@ -77,7 +77,7 @@ export default class View
             // geometry centers
             let centers: Point[] = [];
             for (let i = 0; i < win.length; i++)
-                centers[win[i]] = this.model.cellCenter(win[i]);
+                centers[win[i]] = this.model.getCellGravityCenter(win[i]);
 
             let fi = 0, dfi = Math.PI / 10;
             let timer: number;

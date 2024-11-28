@@ -48,11 +48,8 @@ export default class Trace
         return Math.max(maxX - minX, maxY - minY) ;
     }
 
-    value() {
-        if (dist(this.points[0], this.points[this.points.length - 1]) < 333)  // 333 = this.model.size / 10
-            return 'O';
-        else
-            return 'I';
+    get isClosed() {
+        return dist(this.points[0], this.points[this.points.length - 1]) < this.model!.size / 10;
     }
 }
 

@@ -3,9 +3,10 @@ import Point from './Point.js';
 
 export default class Model 
 {
-    store: Trace[][] = [[], [], [], [], [], [], [], [], [], [],];   // last item for long lines
-    field = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ];
-    size: number;
+    store: Trace[][] = [[], [], [], [], [], [], [], [], [], [],];    // store[9] for long lines
+    size: number;                                                    // side of the game field 
+
+    private field = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]; // other possible values: 'O' | 'X' | 'I'
 
     constructor(size: number) {
         this.size = size;
@@ -32,19 +33,18 @@ export default class Model
         let idx = row * 3 + col;
 
         //
-        let v = trace.value();
         switch (this.field[idx]) {
             case ' ':
-                if (v == 'O' && this.count('O') + 1 == this.count('X')) {
+                if (trace.isClosed && this.count('O') + 1 == this.count('X')) {
                     this.field[idx] = 'O';
                     this.store[idx].push(trace);
-                } else if (v == 'I' && this.count('O') == this.count('X') && this.count('I') == 0) {
+                } else if (!trace.isClosed && this.count('O') == this.count('X') && this.count('I') == 0) {
                     this.field[idx] = 'I';
                     this.store[idx].push(trace);
                 }
                 break;
             case 'I':
-                if (v == 'I' && this.count('O') == this.count('X') && this.count('I') == 1) {
+                if (!trace.isClosed && this.count('O') == this.count('X') && this.count('I') == 1) {
                     this.field[idx] = 'X';
                     this.store[idx].push(trace);
                 }
@@ -53,8 +53,8 @@ export default class Model
     
     }
 
-    // returns array of 3 indexes & who win
-    // returns [] if no winner yet
+    // returns array of 3 indexes & who win ('O' | 'X') 
+    // if no winner yet returns [] 
     whoWin(): [number[], string]
     {
         let f = this.field;
@@ -62,7 +62,7 @@ export default class Model
                 [0, 3, 6], [1, 4, 7], [2, 5, 8],
                 [0, 4, 8], [2, 4, 6], ];
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < m.length; i++) {
             let a = m[i][0], b = m[i][1], c = m[i][2];
 
             if (f[a] == f[b] && f[b] == f[c] && (f[c] == 'O' || f[c] == 'X')) 
@@ -71,7 +71,7 @@ export default class Model
         return [[], ' '];
     }
 
-    cellCenter(idx: number) {
+    getCellGravityCenter(idx: number) {
         let c = new Point (), n = 0;
         for (let j in this.store[idx])
         {

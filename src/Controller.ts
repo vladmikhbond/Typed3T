@@ -23,7 +23,7 @@ export default class Controller
 
     addListeners() {
         // React to mouse events on the canvas, and mouseup on the entire document
-        this.canvas.addEventListener('mousedown', (e: MouseEvent) => {
+        this.canvas.onmousedown = (e: MouseEvent) => {
             this.lastPos = Controller.getMousePos(e)!;
             if (this.lastPos) {
                 this.mouseDown = 1;
@@ -31,18 +31,18 @@ export default class Controller
                 this.trace.addPoint(this.lastPos);
             }
     
-        }, false);
+        };
 
-        this.canvas.addEventListener('mousemove', (e: MouseEvent) => {
+        this.canvas.onmousemove = (e: MouseEvent) => {
             this.mousePos = Controller.getMousePos(e)!;
             if (this.mouseDown == 1) {
                 this.view.drawLine(this.lastPos!, this.mousePos);
                 this.trace!.addPoint(this.mousePos);
                 this.lastPos = this.mousePos;
             }
-        }, false);
+        };
 
-        window.addEventListener('mouseup', (e: MouseEvent) => {
+        this.canvas.onmouseup = (e: MouseEvent) => {
             if (this.mouseDown) {
                 this.mouseDown = 0;
                 // new game
@@ -59,9 +59,7 @@ export default class Controller
                     }
                 }
             }
-    
-
-        }, false);                /// ???
+        } ;              
 
         // React to touch events on the canvas
         // this.canvas.addEventListener('touchstart', sketchpad_touchStart, false);
